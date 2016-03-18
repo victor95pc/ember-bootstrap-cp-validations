@@ -3,6 +3,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 
 var Validations = buildValidations({
   username: validator('length', {
+    debounce: 2000,
     min: 4,
     max: 8
   }),

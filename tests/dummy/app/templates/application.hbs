@@ -1,7 +1,7 @@
 <h2 id="title">ember-bootstrap-cp-validations</h2>
 
 <div style="padding: 15px">
-{{#bs-form formLayout="vertical" model=model}}
+{{#bs-form formLayout="vertical" model=model action=(action 'submit')}}
   {{bs-form-element controlType="email" label="Email" placeholder="Email" property="email"}}
   {{bs-form-element controlType="email" label="Email Confirmation" placeholder="Confirm email" property="emailConfirmation"}}
   {{bs-form-element controlType="text" label="Username" placeholder="Username" property="username"}}
