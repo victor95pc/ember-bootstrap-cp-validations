@@ -10,14 +10,17 @@ const {
 
 export default function() {
   FormElement.reopen({
+    classNameBindings: ['isValidating'],
+
     _attrValidations: null,
+    isValidating: computed.readOnly('_attrValidations.isValidating'),
 
+    // Overwrite
     hasValidator: computed.notEmpty('_attrValidations').readOnly(),
-
     hasErrors: computed.not('_attrValidations.isTruelyValid').readOnly(),
 
-    validation: computed('hasErrors', 'hasValidator', 'showValidation', function() {
-      if (this.get('_attrValidations.isValidating')) {
+    validation: computed('hasErrors', 'hasValidator', 'showValidation', 'isValidating', function() {
+      if (this.get('isValidating')) {
         return null;
       }
       return this._super(...arguments);
