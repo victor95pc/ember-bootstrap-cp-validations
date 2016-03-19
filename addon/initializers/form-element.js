@@ -12,10 +12,12 @@ export default function() {
   FormElement.reopen({
     _attrValidations: null,
 
+    hasValidator: computed.notEmpty('_attrValidations').readOnly(),
+
     hasErrors: computed.not('_attrValidations.isTruelyValid').readOnly(),
 
     validation: computed('hasErrors', 'hasValidator', 'showValidation', function() {
-      if(this.get('_attrValidations.isValidating')) {
+      if (this.get('_attrValidations.isValidating')) {
         return null;
       }
       return this._super(...arguments);
