@@ -14,16 +14,15 @@ export default function() {
 
     _attrValidations: null,
     isValidating: computed.readOnly('_attrValidations.isValidating'),
+    notValidating: computed.not('isValidating').readOnly(),
 
     // Overwrite
     hasValidator: computed.notEmpty('_attrValidations').readOnly(),
-    hasErrors: computed.not('_attrValidations.isTruelyValid').readOnly(),
+    hasErrors: computed.and('_attrValidations.isInvalid', 'notValidating').readOnly(),
 
-    validation: computed('hasErrors', 'hasValidator', 'showValidation', 'isValidating', function() {
-      if (this.get('isValidating')) {
-        return null;
-      }
-      return this._super(...arguments);
+    validation: computed('hasErrors', 'hasValidator', 'showValidation', 'disabled', 'notValidating', function() {
+      let vClass = this._super(...arguments);
+      return vClass && this.get('notValidating') ? vClass : null;
     }),
 
     init() {
