@@ -19,11 +19,17 @@ export default function() {
     // Overwrite
     hasValidator: computed.notEmpty('_attrValidations').readOnly(),
     hasErrors: computed.and('_attrValidations.isInvalid', 'notValidating').readOnly(),
+    required: computed.readOnly('_attrValidations.options.presence.presence'),
 
     validation: computed('hasErrors', 'hasValidator', 'showValidation', 'disabled', 'notValidating', function() {
       let vClass = this._super(...arguments);
       return vClass && this.get('notValidating') ? vClass : null;
     }),
+
+    setupValidations() {
+      defineProperty(this, '_attrValidations', computed.readOnly(`model.validations.attrs.${this.get('property')}`));
+      defineProperty(this, 'errors', computed.readOnly(`_attrValidations.messages`));
+    },
 
     init() {
       this._super(...arguments);
@@ -31,8 +37,7 @@ export default function() {
 
       if (!isBlank(property)) {
         Binding.from(`model.errors.${property}`).to('errors').disconnect(this);
-        defineProperty(this, '_attrValidations', computed.readOnly(`model.validations.attrs.${property}`));
-        defineProperty(this, 'errors', computed.readOnly(`_attrValidations.messages`));
+        this.setupValidations();
       }
     }
   });

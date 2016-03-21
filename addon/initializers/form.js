@@ -1,10 +1,12 @@
+import Ember from 'ember';
 import Form from 'ember-bootstrap/components/bs-form';
 
 export default function() {
   Form.reopen({
-    _propagateErrors() {
-      this.get('childFormElements').setEach('showValidation', true);
-      return this.sendAction('invalid');
+    validate(model) {
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        model.validate().then(() => model.get('validations.isTruelyValid') ? resolve() : reject(), reject);
+      });
     },
 
     submit(e) {
@@ -14,13 +16,10 @@ export default function() {
       if (!this.get('hasValidator')) {
         return this.sendAction();
       } else {
-        return this.get('model').validate().then(() => {
-          if (this.get('model.validations.isTruelyValid')) {
-            return this.sendAction();
-          } else {
-            this._propagateErrors();
-          }
-        }, this._propagateErrors);
+        this.validate(this.get('model')).then(() => this.sendAction(), () => {
+          this.get('childFormElements').setEach('showValidation', true);
+          return this.sendAction('invalid');
+        });
       }
     }
   });
