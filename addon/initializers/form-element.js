@@ -13,13 +13,14 @@ export default function() {
     classNameBindings: ['isValidating'],
 
     _attrValidations: null,
-    isValidating: computed.readOnly('_attrValidations.isValidating'),
     notValidating: computed.not('isValidating').readOnly(),
+    notDisabled: computed.not('disabled').readOnly(),
 
     // Overwrite
     hasValidator: computed.notEmpty('_attrValidations').readOnly(),
     hasErrors: computed.and('_attrValidations.isInvalid', 'notValidating').readOnly(),
-    required: computed.readOnly('_attrValidations.options.presence.presence'),
+    isValidating: computed.readOnly('_attrValidations.isValidating'),
+    required: computed.and('_attrValidations.options.presence.presence', 'notDisabled'),
 
     validation: computed('hasErrors', 'hasValidator', 'showValidation', 'disabled', 'notValidating', function() {
       let vClass = this._super(...arguments);
