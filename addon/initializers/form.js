@@ -13,14 +13,20 @@ export default function() {
       if (e) {
         e.preventDefault();
       }
+
+      this.sendAction('beforeSubmit', e);
+
       if (!this.get('hasValidator')) {
-        return this.sendAction();
+        return this.sendAction('action', e);
       } else {
-        this.validate(this.get('model')).then(() => this.sendAction(), () => {
-          this.get('childFormElements').setEach('showValidation', true);
-          return this.sendAction('invalid');
-        });
+        let validationPromise = this.validate(this.get('model'));
+        if (validationPromise && validationPromise instanceof Ember.RSVP.Promise) {
+          validationPromise.then((r) => this.sendAction('action', e, r), (err) => {
+            this.get('childFormElements').setEach('showValidation', true);
+            return this.sendAction('invalid', e, err);
+          });
+        }
       }
-    }
+    },
   });
 }
