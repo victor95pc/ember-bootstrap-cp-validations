@@ -14,16 +14,16 @@ export default function() {
         e.preventDefault();
       }
 
-      this.sendAction('beforeSubmit', e);
+      this.sendAction('before');
 
       if (!this.get('hasValidator')) {
-        return this.sendAction('action', e);
+        return this.sendAction();
       } else {
         let validationPromise = this.validate(this.get('model'));
         if (validationPromise && validationPromise instanceof Ember.RSVP.Promise) {
-          validationPromise.then((r) => this.sendAction('action', e, r), (err) => {
+          validationPromise.then((r) => this.sendAction('action', r), (err) => {
             this.get('childFormElements').setEach('showValidation', true);
-            return this.sendAction('invalid', e, err);
+            return this.sendAction('invalid', err);
           });
         }
       }
