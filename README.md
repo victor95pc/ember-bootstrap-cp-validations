@@ -1,24 +1,18 @@
 # ember-bootstrap-cp-validations
 
-## Running
+[![npm version](https://badge.fury.io/js/ember-bootstrap-cp-validations.svg)](http://badge.fury.io/js/ember-bootstrap-cp-validations)
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+[Ember CP Validations](https://github.com/offirgolan/ember-cp-validations) support for [Ember Bootstrap](https://github.com/kaliber5/ember-bootstrap).
 
-## Running Tests
+## Install
 
-* `ember test`
-* `ember test --server`
+```bash
+ember install ember-bootstrap-cp-validations
+```
 
-## Building
+## Usage
 
-* `ember build`
+Just install this addon and use ember-bootstrap as intended. This addon adds support for the following components
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
-
-[npm]: https://www.npmjs.org/package/ember-bootstrap-cp-validations
-[npm-badge]: https://img.shields.io/npm/v/ember-bootstrap-cp-validations.svg?style=flat-square
-[travis]: https://travis-ci.org/offirgolan/ember-bootstrap-cp-validations
-[travis-badge]: https://img.shields.io/travis/offirgolan/ember-bootstrap-cp-validations/master.svg?style=flat-square
-[embadge]: http://embadge.io/
-[ember-badge]: http://embadge.io/v1/badge.svg?start=1.13.0
+- [bs-form](http://kaliber5.github.io/ember-bootstrap/api/classes/Components.Form.html)
+- [bs-form-element](http://kaliber5.github.io/ember-bootstrap/api/classes/Components.FormElement.html)
