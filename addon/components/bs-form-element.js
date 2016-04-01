@@ -7,8 +7,6 @@ const {
 } = Ember;
 
 export default BsFormElement.extend({
-    classNameBindings: ['isValidating'],
-
     _attrValidations: null,
     notValidating: computed.not('isValidating').readOnly(),
     notDisabled: computed.not('disabled').readOnly(),
