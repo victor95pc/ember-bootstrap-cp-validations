@@ -10,7 +10,13 @@ export default BsForm.extend({
 
   validate(model) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      model.validate().then(() => model.get('validations.isTruelyValid') ? resolve() : reject(), reject);
+      let m = model;
+
+      if(model instanceof Ember.ObjectProxy) {
+        m = model.get('content');
+      }
+
+      m.validate().then(() => model.get('validations.isTruelyValid') ? resolve() : reject(), reject);
     });
   }
 });
