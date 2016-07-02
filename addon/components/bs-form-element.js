@@ -19,6 +19,7 @@ export default BsFormElement.extend({
 
   setupValidations() {
     defineProperty(this, '_attrValidations', computed.readOnly(`model.validations.attrs.${this.get('property')}`));
-    defineProperty(this, 'errors', computed.readOnly(`_attrValidations.messages`));
+    defineProperty(this, 'errors', computed.readOnly('_attrValidations.messages'));
+    defineProperty(this, 'warnings', computed.readOnly('_attrValidations.warningMessages'));
   }
 });
